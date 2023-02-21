@@ -1,9 +1,7 @@
 import 'dart:core';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
 
 var request = Uri.parse("https://api.hgbrasil.com/finance?key=88e2f184");
@@ -41,14 +39,15 @@ class _HomeState extends State<Home> {
     euroController.text = (real/euro).toStringAsFixed(2);
   }
   void _dollarChanged(String text){
-    double dollar = double.parse(text);
-    realController.text = (dollar* this.dollar).toStringAsFixed(2);
-    euroController.text = (dollar* this.dollar/euro).toStringAsFixed(2);
+  double dollar1 = double.parse(text);
+  realController.text = (dollar1*dollar).toStringAsFixed(2);
+  euroController.text = (dollar1*dollar / euro).toStringAsFixed(2);
+
   }
   void _euroChanged(String text){
-    double euro = double.parse(text);
-    realController.text = (euro* this.euro).toStringAsFixed(2);
-    dollarController.text = (euro* this.euro/dollar).toStringAsFixed(2);
+    double euro1 = double.parse(text);
+    realController.text = (euro*euro1).toStringAsFixed(2);
+    dollarController.text = (euro*euro1 / dollar).toStringAsFixed(2);
   }
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,7 @@ class _HomeState extends State<Home> {
                 );
               } else {
                 dollar = snapshot.data?["results"]["currencies"]["USD"]["buy"];
-                dollar = snapshot.data?["results"]["currencies"]["EUR"]["buy"];
+                euro = snapshot.data?["results"]["currencies"]["EUR"]["buy"];
                 return SingleChildScrollView(
                   padding: EdgeInsets.all(10),
                   child: Column(
